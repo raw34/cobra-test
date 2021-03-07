@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/raw34/cobra-test/cmd"
+import "cobra-test/cmd"
 
 func main() {
 	cmd.Execute()
