@@ -17,7 +17,8 @@ package cmd
 
 import (
 	"fmt"
-
+	"io/ioutil"
+	"net/http"
 	"github.com/spf13/cobra"
 )
 
@@ -33,6 +34,20 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("hello called")
+		var url = "http://localhost:9000/api/components/search_projects?s=analysisDate&asc=false&filter=query=%22ds%22&p=1&ps=500"
+
+		req, _ := http.NewRequest("GET", url, nil)
+		req.Header.Set("Authorization", "Basic ZWM1OWY2ZDJjZDBkY2YwMWRmODIxZWUwNjc2NDc3MDg1MTZkMDQ5ODo=")
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("Fatal error ", err.Error())
+		}
+
+		defer resp.Body.Close()
+		body, _ := ioutil.ReadAll(resp.Body)
+		fmt.Println(string(body))
 	},
 }
 
